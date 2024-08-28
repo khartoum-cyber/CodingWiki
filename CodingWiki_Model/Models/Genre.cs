@@ -9,6 +9,6 @@ namespace CodingWiki_Model.Models
 
         public string GenreName { get; set; }
 
-        public int Display { get; set; }
+        public int DisplayOrder { get; set; }
     }
 }
