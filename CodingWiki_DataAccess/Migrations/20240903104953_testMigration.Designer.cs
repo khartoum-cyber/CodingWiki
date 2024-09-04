@@ -4,6 +4,7 @@ using CodingWiki_DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodingWiki_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240903104953_testMigration")]
+    partial class testMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,27 +85,43 @@ namespace CodingWiki_DataAccess.Migrations
                     b.HasData(
                         new
                         {
+                            IDBook = 1,
+                            ISBN = "123B12",
+                            Price = 10.99m,
+                            Publisher_Id = 1,
+                            Title = "Spider without Duty1"
+                        },
+                        new
+                        {
+                            IDBook = 2,
+                            ISBN = "12123B12",
+                            Price = 11.99m,
+                            Publisher_Id = 1,
+                            Title = "Fortune of time1"
+                        },
+                        new
+                        {
                             IDBook = 3,
                             ISBN = "77652",
                             Price = 20.99m,
-                            Publisher_Id = 3,
-                            Title = "Fake Sunday 999"
+                            Publisher_Id = 2,
+                            Title = "Fake Sunday1"
                         },
                         new
                         {
                             IDBook = 4,
                             ISBN = "CC12B12",
                             Price = 25.99m,
-                            Publisher_Id = 2,
-                            Title = "Cookie Jar1 999"
+                            Publisher_Id = 3,
+                            Title = "Cookie Jar1"
                         },
                         new
                         {
                             IDBook = 5,
                             ISBN = "90392B33",
                             Price = 40.99m,
-                            Publisher_Id = 1,
-                            Title = "Cloudy Forest 999"
+                            Publisher_Id = 3,
+                            Title = "Cloudy Forest1"
                         });
                 });
 

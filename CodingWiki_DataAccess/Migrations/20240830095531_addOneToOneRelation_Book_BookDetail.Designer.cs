@@ -4,6 +4,7 @@ using CodingWiki_DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodingWiki_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240830095531_addOneToOneRelation_Book_BookDetail")]
+    partial class addOneToOneRelation_Book_BookDetail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,42 +70,48 @@ namespace CodingWiki_DataAccess.Migrations
                         .HasPrecision(10, 5)
                         .HasColumnType("decimal(10,5)");
 
-                    b.Property<int>("Publisher_Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IDBook");
-
-                    b.HasIndex("Publisher_Id");
 
                     b.ToTable("Books");
 
                     b.HasData(
                         new
                         {
+                            IDBook = 1,
+                            ISBN = "123B12",
+                            Price = 10.99m,
+                            Title = "Spider without Duty"
+                        },
+                        new
+                        {
+                            IDBook = 2,
+                            ISBN = "12123B12",
+                            Price = 11.99m,
+                            Title = "Fortune of time"
+                        },
+                        new
+                        {
                             IDBook = 3,
                             ISBN = "77652",
                             Price = 20.99m,
-                            Publisher_Id = 3,
-                            Title = "Fake Sunday 999"
+                            Title = "Fake Sunday"
                         },
                         new
                         {
                             IDBook = 4,
                             ISBN = "CC12B12",
                             Price = 25.99m,
-                            Publisher_Id = 2,
-                            Title = "Cookie Jar1 999"
+                            Title = "Cookie Jar"
                         },
                         new
                         {
                             IDBook = 5,
                             ISBN = "90392B33",
                             Price = 40.99m,
-                            Publisher_Id = 1,
-                            Title = "Cloudy Forest 999"
+                            Title = "Cloudy Forest"
                         });
                 });
 
@@ -170,26 +179,6 @@ namespace CodingWiki_DataAccess.Migrations
                     b.HasKey("Publisher_Id");
 
                     b.ToTable("Publishers");
-
-                    b.HasData(
-                        new
-                        {
-                            Publisher_Id = 1,
-                            Location = "Chicago",
-                            Name = "Pub 1 Jimmy"
-                        },
-                        new
-                        {
-                            Publisher_Id = 2,
-                            Location = "New York",
-                            Name = "Pub 2 John"
-                        },
-                        new
-                        {
-                            Publisher_Id = 3,
-                            Location = "Hawaii",
-                            Name = "Pub 3 Ben"
-                        });
                 });
 
             modelBuilder.Entity("CodingWiki_Model.Models.SubCategory", b =>
@@ -210,17 +199,6 @@ namespace CodingWiki_DataAccess.Migrations
                     b.ToTable("SubCategories");
                 });
 
-            modelBuilder.Entity("CodingWiki_Model.Models.Book", b =>
-                {
-                    b.HasOne("CodingWiki_Model.Models.Publisher", "Publisher")
-                        .WithMany("Books")
-                        .HasForeignKey("Publisher_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Publisher");
-                });
-
             modelBuilder.Entity("CodingWiki_Model.Models.BookDetail", b =>
                 {
                     b.HasOne("CodingWiki_Model.Models.Book", "Book")
@@ -235,11 +213,6 @@ namespace CodingWiki_DataAccess.Migrations
             modelBuilder.Entity("CodingWiki_Model.Models.Book", b =>
                 {
                     b.Navigation("BookDetail");
-                });
-
-            modelBuilder.Entity("CodingWiki_Model.Models.Publisher", b =>
-                {
-                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }
