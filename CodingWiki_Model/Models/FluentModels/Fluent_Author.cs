@@ -16,6 +16,6 @@ namespace CodingWiki_Model.Models
         public string Location { get; set; }
         [NotMapped]
         public string FullName => $"{FirstName} {LastName}";
-        public List<Fluent_Book> Books { get; set; }
+        //public List<BookAuthorMap> Books { get; set; }
     }
 }

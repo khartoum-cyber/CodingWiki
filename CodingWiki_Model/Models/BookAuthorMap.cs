@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CodingWiki_Model.Models
 {
-    internal class BookAuthorMap
+    public class BookAuthorMap
     {
+        [ForeignKey("Book")]
+        public int IDBook { get; set; }
+        [ForeignKey("Author")]
+        public int Author_Id { get; set; }
+        public Book Book { get; set; }
+        public Author Author { get; set; }
     }
 }
