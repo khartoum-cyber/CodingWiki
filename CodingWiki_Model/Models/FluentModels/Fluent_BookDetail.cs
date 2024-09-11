@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CodingWiki_Model.Models
+namespace CodingWiki_Model.Models.FluentModels
 {
     public class Fluent_BookDetail
     {

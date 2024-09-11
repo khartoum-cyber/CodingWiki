@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CodingWiki_Model.Models
+namespace CodingWiki_Model.Models.FluentModels
 {
     public class Fluent_Publisher
     {
