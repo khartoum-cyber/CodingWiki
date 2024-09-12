@@ -9,6 +9,6 @@ namespace CodingWiki_Model.Models.FluentModels
         [Required]
         public string Name { get; set; }
         public string Location { get; set; }
-        public List<Fluent_Book> Books { get; set; }
+        //public List<Fluent_Book> Books { get; set; }
     }
 }
