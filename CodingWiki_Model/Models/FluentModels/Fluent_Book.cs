@@ -13,9 +13,8 @@ namespace CodingWiki_Model.Models.FluentModels
 
         public Fluent_BookDetail BookDetail { get; set; }
 
-        //[ForeignKey("Publisher")]
-        //public int Publisher_Id { get; set; }
-        //public Fluent_Publisher Publisher { get; set; }
+        public int Publisher_Id { get; set; }
+        public Fluent_Publisher Publisher { get; set; }
         //public List<Fluent_Author> Authors { get; set; }
     }
 }
