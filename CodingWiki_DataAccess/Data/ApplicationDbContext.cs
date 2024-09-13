@@ -16,7 +16,7 @@ namespace CodingWiki_DataAccess.Data
         public DbSet<Fluent_Book> Fluent_Books { get; set; }
         public DbSet<Fluent_Author> Fluent_Authors { get; set; }
         public DbSet<Fluent_Publisher> Fluent_Publishers { get; set; }
-        public DbSet<Fluent_BookAuthorMap> Fluent_BookAuthorMaps { get; set; }
+        //public DbSet<Fluent_BookAuthorMap> Fluent_BookAuthorMaps { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -30,6 +30,8 @@ namespace CodingWiki_DataAccess.Data
             modelBuilder.Entity<Fluent_BookDetail>().Property(u => u.NumberOfChapters).HasColumnName("NoOfChapters");
             modelBuilder.Entity<Fluent_BookDetail>().Property(u => u.NumberOfChapters).IsRequired();
             modelBuilder.Entity<Fluent_BookDetail>().HasKey(u => u.BookDetailId);
+            modelBuilder.Entity<Fluent_BookDetail>().HasOne(u => u.Book).WithOne(u => u.BookDetail)
+                .HasForeignKey<Fluent_BookDetail>(u => u.IDBook);
 
             modelBuilder.Entity<Fluent_Book>().Property(u => u.ISBN).HasMaxLength(50);
             modelBuilder.Entity<Fluent_Book>().Property(u => u.ISBN).IsRequired();
