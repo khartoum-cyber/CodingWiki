@@ -53,6 +53,12 @@ namespace CodingWiki_DataAccess.Data
 
             modelBuilder.Entity<BookAuthorMap>().HasKey(u => new { u.Author_Id, u.IDBook });
 
+            modelBuilder.Entity<Fluent_BookAuthorMap>().HasKey(u => new { u.Author_Id, u.IDBook });
+            modelBuilder.Entity<Fluent_BookAuthorMap>().HasOne(u => u.Book).WithMany(u => u.BookAuthorMap)
+                .HasForeignKey(u => u.IDBook);
+            modelBuilder.Entity<Fluent_BookAuthorMap>().HasOne(u => u.Author).WithMany(u => u.BookAuthorMap)
+                .HasForeignKey(u => u.Author_Id);
+
             var bookList = new Book[]
             {
                 new Book { IDBook = 3, Title = "Fake Sunday 999", ISBN = "77652", Price = 20.99m, Publisher_Id = 3 },
