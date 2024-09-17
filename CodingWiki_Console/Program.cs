@@ -1,7 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using CodingWiki_DataAccess.Data;
 using CodingWiki_Model.Models;
-using Microsoft.EntityFrameworkCore;
 
 Console.WriteLine("Hello, World!");
 
@@ -20,7 +19,7 @@ void GetAllBooks()
 async void AddBook()
 {
     Book book = new() { Title = "New EF Core Book", ISBN = "9999", Price = 10.93m, Publisher_Id = 1 };
-    using var context = new ApplicationDbContext();
+    await using var context = new ApplicationDbContext();
     var books = await context.Books.AddAsync(book);
     await context.SaveChangesAsync();
 }
