@@ -6,7 +6,27 @@ using Microsoft.EntityFrameworkCore;
 Console.WriteLine("Hello, World!");
 
 //AddBook();
-GetAllBooks();
+//GetAllBooks();
+UpdateBook();
+
+async void UpdateBook()
+{
+    try
+    {
+        using var context = new ApplicationDbContext();
+        var books = await context.Books.Where(u => u.Publisher_Id == 1).ToListAsync();
+        //Console.WriteLine(book.Title + " - " + book.ISBN);
+        foreach (var book in books)
+        {
+            book.Price = 55.55m;
+        }
+        await context.SaveChangesAsync();
+    }
+    catch (Exception e)
+    {
+
+    }
+}
 
 async void GetBook()
 {
