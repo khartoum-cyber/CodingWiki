@@ -1,11 +1,37 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using CodingWiki_DataAccess.Data;
 using CodingWiki_Model.Models;
+using Microsoft.EntityFrameworkCore;
 
 Console.WriteLine("Hello, World!");
 
 //AddBook();
 GetAllBooks();
+
+async void GetBook()
+{
+    try
+    {
+        await using var context = new ApplicationDbContext();
+        var books = await context.Books.Skip(0).Take(2).ToListAsync();
+        //Console.WriteLine(book.Title + " - " + book.ISBN);
+        foreach (var book in books)
+        {
+            Console.WriteLine(book.Title + " - " + book.ISBN);
+        }
+
+        books = await context.Books.Skip(4).Take(1).ToListAsync();
+        foreach (var book in books)
+        {
+            Console.WriteLine(book.Title + " - " + book.ISBN);
+        }
+    }
+    catch (Exception e)
+    {
+
+    }
+}
+
 void GetAllBooks()
 {
     using var context = new ApplicationDbContext();
