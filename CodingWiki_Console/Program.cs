@@ -9,6 +9,14 @@ Console.WriteLine("Hello, World!");
 //GetAllBooks();
 UpdateBook();
 
+async void Delete()
+{
+    using var context = new ApplicationDbContext();
+    var book = await context.Books.FindAsync(1003);
+    context.Books.Remove(book);
+    await context.SaveChangesAsync();
+}
+
 async void UpdateBook()
 {
     try
