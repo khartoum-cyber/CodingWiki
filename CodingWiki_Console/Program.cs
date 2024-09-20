@@ -7,68 +7,68 @@ Console.WriteLine("Hello, World!");
 
 //AddBook();
 //GetAllBooks();
-UpdateBook();
+//UpdateBook();
 
-async void Delete()
-{
-    using var context = new ApplicationDbContext();
-    var book = await context.Books.FindAsync(1003);
-    context.Books.Remove(book);
-    await context.SaveChangesAsync();
-}
+//async void Delete()
+//{
+//    using var context = new ApplicationDbContext();
+//    var book = await context.Books.FindAsync(1003);
+//    context.Books.Remove(book);
+//    await context.SaveChangesAsync();
+//}
 
-async void UpdateBook()
-{
-    try
-    {
-        using var context = new ApplicationDbContext();
-        var books = await context.Books.Where(u => u.Publisher_Id == 1).ToListAsync();
-        //Console.WriteLine(book.Title + " - " + book.ISBN);
-        foreach (var book in books)
-        {
-            book.Price = 55.55m;
-        }
-        await context.SaveChangesAsync();
-    }
-    catch (Exception e)
-    {
+//async void UpdateBook()
+//{
+//    try
+//    {
+//        using var context = new ApplicationDbContext();
+//        var books = await context.Books.Where(u => u.Publisher_Id == 1).ToListAsync();
+//        //Console.WriteLine(book.Title + " - " + book.ISBN);
+//        foreach (var book in books)
+//        {
+//            book.Price = 55.55m;
+//        }
+//        await context.SaveChangesAsync();
+//    }
+//    catch (Exception e)
+//    {
 
-    }
-}
+//    }
+//}
 
-async void GetBook()
-{
-    try
-    {
-        await using var context = new ApplicationDbContext();
-        var books = await context.Books.Skip(0).Take(2).ToListAsync();
-        //Console.WriteLine(book.Title + " - " + book.ISBN);
-        foreach (var book in books)
-        {
-            Console.WriteLine(book.Title + " - " + book.ISBN);
-        }
+//async void GetBook()
+//{
+//    try
+//    {
+//        await using var context = new ApplicationDbContext();
+//        var books = await context.Books.Skip(0).Take(2).ToListAsync();
+//        //Console.WriteLine(book.Title + " - " + book.ISBN);
+//        foreach (var book in books)
+//        {
+//            Console.WriteLine(book.Title + " - " + book.ISBN);
+//        }
 
-        books = await context.Books.Skip(4).Take(1).ToListAsync();
-        foreach (var book in books)
-        {
-            Console.WriteLine(book.Title + " - " + book.ISBN);
-        }
-    }
-    catch (Exception e)
-    {
+//        books = await context.Books.Skip(4).Take(1).ToListAsync();
+//        foreach (var book in books)
+//        {
+//            Console.WriteLine(book.Title + " - " + book.ISBN);
+//        }
+//    }
+//    catch (Exception e)
+//    {
 
-    }
-}
+//    }
+//}
 
-void GetAllBooks()
-{
-    using var context = new ApplicationDbContext();
-    var books = context.Books.ToList();
-    foreach (var book in books)
-    {
-        Console.WriteLine(book.Title + " - " + book.ISBN);
-    }
-}
+//void GetAllBooks()
+//{
+//    using var context = new ApplicationDbContext();
+//    var books = context.Books.ToList();
+//    foreach (var book in books)
+//    {
+//        Console.WriteLine(book.Title + " - " + book.ISBN);
+//    }
+//}
 
 //async void AddBook()
 //{
