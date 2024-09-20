@@ -17,5 +17,22 @@ namespace CodingWiki_Web.Controllers
             List<Category> objList = _db.Categories.ToList();
             return View(objList);
         }
+
+        public IActionResult Upsert(int? id)
+        {
+            Category obj = new();
+            if (id is null or 0)
+            {
+                //create
+                return View(obj);
+            }
+            //edit
+            obj = _db.Categories.FirstOrDefault(u => u.CategoryId == id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
     }
 }
