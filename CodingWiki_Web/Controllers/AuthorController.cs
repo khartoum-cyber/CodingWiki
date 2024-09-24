@@ -4,118 +4,72 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodingWiki_Web.Controllers
 {
-    public class CategoryController : Controller
+    public class AuthorController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public CategoryController(ApplicationDbContext db)
+        public AuthorController(ApplicationDbContext db)
         {
             _db = db;
         }
 
         public IActionResult Index()
         {
-            List<Category> objList = _db.Categories.ToList();
-
+            List<Author> objList = _db.Authors.ToList();
             return View(objList);
         }
 
         public IActionResult Upsert(int? id)
         {
-            Category obj = new();
-            if (id is null or 0)
+            Author obj = new();
+            if (id == null || id == 0)
             {
                 //create
                 return View(obj);
             }
             //edit
-            obj = _db.Categories.FirstOrDefault(u => u.CategoryId == id);
+            obj = _db.Authors.FirstOrDefault(u => u.Author_Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-
             return View(obj);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(Category obj)
+        public async Task<IActionResult> Upsert(Author obj)
         {
+
             if (ModelState.IsValid)
             {
-                if (obj.CategoryId == 0)
+                if (obj.Author_Id == 0)
                 {
                     //create
-                    await _db.Categories.AddAsync(obj);
+                    await _db.Authors.AddAsync(obj);
                 }
                 else
                 {
                     //update
-                    _db.Categories.Update(obj);
+                    _db.Authors.Update(obj);
                 }
                 await _db.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
             return View(obj);
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            Category obj = new();
-            obj = _db.Categories.FirstOrDefault(u => u.CategoryId == id);
+
+            Author obj = new();
+            obj = _db.Authors.FirstOrDefault(u => u.Author_Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
 
-            _db.Categories.Remove(obj);
+            _db.Authors.Remove(obj);
             await _db.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult CreateMultiple2()
-        {
-            List<Category> categories = new();
-            for (int i = 1; i <= 2; i++)
-            {
-                categories.Add(new Category { CategoryName = Guid.NewGuid().ToString() });
-            }
-            _db.Categories.AddRange(categories);
-            _db.SaveChanges();
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult CreateMultiple5()
-        {
-
-            List<Category> categories = new();
-            for (int i = 1; i <= 5; i++)
-            {
-                categories.Add(new Category { CategoryName = Guid.NewGuid().ToString() });
-            }
-            _db.Categories.AddRange(categories);
-            _db.SaveChanges();
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult RemoveMultiple2()
-        {
-            List<Category> categories = _db.Categories.OrderByDescending(u => u.CategoryId).Take(2).ToList();
-            _db.Categories.RemoveRange(categories);
-            _db.SaveChanges();
-
-            return RedirectToAction(nameof(Index));
-        }
-        public IActionResult RemoveMultiple5()
-        {
-            List<Category> categories = _db.Categories.OrderByDescending(u => u.CategoryId).Take(5).ToList();
-            _db.Categories.RemoveRange(categories);
-            _db.SaveChanges();
-
             return RedirectToAction(nameof(Index));
         }
     }
