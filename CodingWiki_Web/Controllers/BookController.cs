@@ -42,43 +42,36 @@ namespace CodingWiki_Web.Controllers
             return View(obj);
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Upsert(Category obj)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (obj.CategoryId == 0)
-        //        {
-        //            //create
-        //            await _db.Categories.AddAsync(obj);
-        //        }
-        //        else
-        //        {
-        //            //update
-        //            _db.Categories.Update(obj);
-        //        }
-        //        await _db.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Upsert(BookVM obj)
+        {
+            if (obj.Book.IDBook == 0)
+            {
+                //create
+                await _db.Books.AddAsync(obj.Book);
+            }
+            else
+            {
+                //update
+                _db.Books.Update(obj.Book);
+            }
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
 
-        //    return View(obj);
-        //}
+        }
 
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    Category obj = new();
-        //    obj = _db.Categories.FirstOrDefault(u => u.CategoryId == id);
-        //    if (obj == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Delete(int id)
+        {
+            Book obj = new();
+            obj = _db.Books.FirstOrDefault(u => u.IDBook == id);
 
-        //    _db.Categories.Remove(obj);
-        //    await _db.SaveChangesAsync();
+            _db.Books.Remove(obj);
 
-        //    return RedirectToAction(nameof(Index));
-        //}
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
 
         //public IActionResult CreateMultiple2()
         //{
