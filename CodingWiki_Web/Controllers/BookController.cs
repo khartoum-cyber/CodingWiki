@@ -18,6 +18,11 @@ namespace CodingWiki_Web.Controllers
         {
             List<Book> objList = _db.Books.ToList();
 
+            foreach (var obj in objList)
+            {
+                _db.Entry(obj).Reference(u => u.Publisher).Load();
+            }
+
             return View(objList);
         }
 
