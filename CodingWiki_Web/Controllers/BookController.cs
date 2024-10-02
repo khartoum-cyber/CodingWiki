@@ -1,6 +1,8 @@
 ﻿using CodingWiki_DataAccess.Data;
 using CodingWiki_Model.Models;
 using Microsoft.AspNetCore.Mvc;
+using CodingWiki_Model.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CodingWiki_Web.Controllers
 {
@@ -19,23 +21,26 @@ namespace CodingWiki_Web.Controllers
             return View(objList);
         }
 
-        //public IActionResult Upsert(int? id)
-        //{
-        //    Category obj = new();
-        //    if (id is null or 0)
-        //    {
-        //        //create
-        //        return View(obj);
-        //    }
-        //    //edit
-        //    obj = _db.Categories.FirstOrDefault(u => u.CategoryId == id);
-        //    if (obj == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public IActionResult Upsert(int? id)
+        {
+            BookVM obj = new();
 
-        //    return View(obj);
-        //}
+            obj.PublisherList = _db.Publishers.Select(i => new SelectListItem
+            {
+                Text = i.Name,
+                Value = i.Publisher_Id.ToString()
+            });
+
+            if (id is null or 0)
+            {
+                //create
+                return View(obj);
+            }
+            //edit
+            obj.Book = _db.Books.FirstOrDefault(u => u.IDBook == id);
+
+            return View(obj);
+        }
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
