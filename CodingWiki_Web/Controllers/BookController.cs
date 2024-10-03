@@ -78,6 +78,7 @@ namespace CodingWiki_Web.Controllers
 
             //edit
             obj.Book = _db.Books.FirstOrDefault(u => u.IDBook == id);
+            obj.Book.BookDetail = _db.BookDetails.FirstOrDefault(u => u.IDBook == id);
 
             if (obj == null)
             {
@@ -88,17 +89,19 @@ namespace CodingWiki_Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Details(BookDetail obj)
+        public async Task<IActionResult> Details(BookVM obj)
         {
-            if (obj.BookDetailId == 0)
+            obj.Book.BookDetail.IDBook = obj.Book.IDBook;
+
+            if (obj.Book.BookDetail.BookDetailId == 0)
             {
                 //create
-                await _db.BookDetails.AddAsync(obj);
+                await _db.BookDetails.AddAsync(obj.Book.BookDetail);
             }
             else
             {
                 //update
-                _db.BookDetails.Update(obj);
+                _db.BookDetails.Update(obj.Book.BookDetail);
             }
             await _db.SaveChangesAsync();
 
