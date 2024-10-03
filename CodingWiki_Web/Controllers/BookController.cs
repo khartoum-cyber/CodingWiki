@@ -3,6 +3,7 @@ using CodingWiki_Model.Models;
 using Microsoft.AspNetCore.Mvc;
 using CodingWiki_Model.ViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace CodingWiki_Web.Controllers
 {
@@ -62,8 +63,46 @@ namespace CodingWiki_Web.Controllers
                 _db.Books.Update(obj.Book);
             }
             await _db.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Details(int? id)
+        {
+            BookVM obj = new();
+
+            if (id is null or 0)
+            {
+                return NotFound();
+            }
+
+            //edit
+            obj.Book = _db.Books.FirstOrDefault(u => u.IDBook == id);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(BookDetail obj)
+        {
+            if (obj.BookDetailId == 0)
+            {
+                //create
+                await _db.BookDetails.AddAsync(obj);
+            }
+            else
+            {
+                //update
+                _db.BookDetails.Update(obj);
+            }
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int id)
