@@ -69,16 +69,16 @@ namespace CodingWiki_Web.Controllers
 
         public IActionResult Details(int? id)
         {
-            BookVM obj = new();
-
             if (id is null or 0)
             {
                 return NotFound();
             }
 
+            BookDetail obj = new();
+
             //edit
             obj.Book = _db.Books.FirstOrDefault(u => u.IDBook == id);
-            obj.Book.BookDetail = _db.BookDetails.FirstOrDefault(u => u.IDBook == id);
+            obj = _db.BookDetails.FirstOrDefault(u => u.IDBook == id);
 
             if (obj == null)
             {
@@ -89,19 +89,17 @@ namespace CodingWiki_Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Details(BookVM obj)
+        public async Task<IActionResult> Details(BookDetail obj)
         {
-            obj.Book.BookDetail.IDBook = obj.Book.IDBook;
-
-            if (obj.Book.BookDetail.BookDetailId == 0)
+            if (obj.BookDetailId == 0)
             {
                 //create
-                await _db.BookDetails.AddAsync(obj.Book.BookDetail);
+                await _db.BookDetails.AddAsync(obj);
             }
             else
             {
                 //update
-                _db.BookDetails.Update(obj.Book.BookDetail);
+                _db.BookDetails.Update(obj);
             }
             await _db.SaveChangesAsync();
 
